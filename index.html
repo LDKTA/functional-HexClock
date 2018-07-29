@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://fonts.googleapis.com/css?family=Bungee+Shade" rel="stylesheet">
+    <title>Hex Clock</title>
+</head>
+<body>
+    <script>
+        function time() {
+            const date = new Date()
+            let hours = date.getHours()
+            let minutes = date.getMinutes()
+            let seconds = date.getSeconds()
+            const arr = [hours, minutes, seconds].map(function(num) {
+                return num < 10 ? '0' + num : String(num)
+            })
+            hours = arr[0]
+            minutes = arr[1]
+            seconds = arr[2]
+                return hours + minutes + seconds
+        }
+
+        console.log(time())
+
+        function output(time) {
+            const color = '#' + time 
+            document.body.bgColor = color
+            document.body.textContent = color
+            document.body.style.color = 'white'
+            document.body.style.fontFamily = 'Bungee Shade'
+            document.body.style.fontSize = '5rem'
+            document.body.style.textAlign = 'center'
+            document.body.style.position = 'absolute'
+            document.body.style.top = '50%'
+            document.body.style.left = '50%'
+            document.body.style.transform = 'translateX(-50%) translateY(-50%)'
+        }
+
+        function startClick(callback) {
+            document.body.addEventListener('dblclick', function(e) {
+                callback()
+            })
+        }
+
+        function stopClick(callback, name) {
+            document.body.addEventListener('click', function(e) {
+                callback(name)
+            })
+        }
+
+        function init() {
+            const ticker = setInterval(function() { output(time()) }, 1000)
+            stopClick(clearInterval, ticker)
+            startClick(init)
+        }
+
+        init()
+    </script>
+</body>
+</html>
